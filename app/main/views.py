@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 01:48:42
 LastEditors: andy
-LastEditTime: 2023-06-06 04:04:35
+LastEditTime: 2023-06-06 04:39:04
 Description: app 主試圖
 '''
 
@@ -112,3 +112,15 @@ def delete_record(id):
     flash("刪除成功")
 
     return redirect(url_for("main.records"))
+
+
+@main.route("/record_types")
+@login_required
+def record_types():
+    """所有記帳種類路由"""
+
+    user = current_user
+
+    types = user.record_types
+
+    return render_template("main/record_types.html", types=types)
