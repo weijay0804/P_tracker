@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 01:48:42
 LastEditors: andy
-LastEditTime: 2023-06-06 07:22:43
+LastEditTime: 2023-06-06 07:41:02
 Description: app 主試圖
 '''
 
@@ -47,8 +47,19 @@ def add_record():
         date = request.form.get("date")
         type_id = request.form.get("select_type")
         project_id = request.form.get("select_project")
+        select_in_out = request.form.get("select_in_out")
 
         date_object = datetime.strptime(date, "%Y-%m-%d").date()
+
+        # 支出
+        if int(select_in_out) == 0:
+            if float(price) > 0:
+                price = -float(price)
+
+        # 收入
+        else:
+            if float(price) < 0:
+                price = -float(price)
 
         record = Record(name=name, price=price, desc=desc, date=date_object)
 
