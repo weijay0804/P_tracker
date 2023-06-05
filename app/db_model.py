@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 00:26:39
 LastEditors: andy
-LastEditTime: 2023-06-06 06:17:20
+LastEditTime: 2023-06-06 06:24:30
 Description: database ORM model
 '''
 
@@ -105,7 +105,7 @@ class Project(db.Model):
     current_price = db.Column(db.Float)
     date = db.Column(db.Date)
 
-    user = db.relationship('User', back_populates="project")
+    user = db.relationship('User', back_populates="projects")
 
     # 建立與 record table 一對多關係
     records = db.relationship('Record', back_populates="project", lazy="joined")
