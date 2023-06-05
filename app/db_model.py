@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 00:26:39
 LastEditors: andy
-LastEditTime: 2023-06-06 01:12:10
+LastEditTime: 2023-06-06 02:48:17
 Description: database ORM model
 '''
 
@@ -23,6 +23,11 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
 
+    # 建立與 record table 一對多關係
+    records = db.relationship(
+        'Record', back_populates="user", lazy="joined", cascade="delete, delete-orphan"
+    )
+
     @property
     def password(self):
         '''讓外部無法讀取 pssword 屬性'''
@@ -38,6 +43,21 @@ class User(db.Model, UserMixin):
         '''檢查使用者密碼是否正確'''
 
         return check_password_hash(self.password_hash, password)
+
+
+class Record(db.Model):
+    """record table"""
+
+    __tablename__ = "record"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    name = db.Column(db.String(30), index=True)
+    price = db.Column(db.Float)
+    desc = db.Column(db.Text)
+    date = db.Column(db.Date)
+
+    user = db.relationship('User', back_populates="records")
 
 
 @login_manager.user_loader
