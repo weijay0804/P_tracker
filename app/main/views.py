@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 01:48:42
 LastEditors: andy
-LastEditTime: 2023-06-06 07:41:02
+LastEditTime: 2023-06-06 07:51:01
 Description: app 主試圖
 '''
 
@@ -131,6 +131,9 @@ def delete_record(id):
     if record.user != user:
         abort(403)
 
+    if record.project:
+        record.project.current_price -= record.price
+
     user.records.remove(record)
 
     db.session.commit()
@@ -231,6 +234,10 @@ def delete_record_type(id):
 
     if r_type.user != user:
         abort(403)
+
+    if r_type.records:
+        for record in r_type.records:
+            record.project.current_price -= record.price
 
     user.record_types.remove(r_type)
     db.session.commit()
