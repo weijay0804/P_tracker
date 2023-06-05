@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 00:26:39
 LastEditors: andy
-LastEditTime: 2023-06-06 04:27:23
+LastEditTime: 2023-06-06 04:30:03
 Description: database ORM model
 '''
 
@@ -74,10 +74,7 @@ class RecordType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     name = db.Column(db.String(30), index=True)
-    price = db.Column(db.Float)
-    current_price = db.Column(db.Float)
     desc = db.Column(db.Text)
-    date = db.Column(db.Date)
 
     user = db.relationship('User', back_populates="record_types")
 
