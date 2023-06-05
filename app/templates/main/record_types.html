@@ -28,7 +28,8 @@
                 <div class="d-flex justify-content-start">
                     <a href="{{ url_for('main.edit_record_type', id = t.id )}}" class="btn btn-outline-primary"
                         role="button">編輯</a>
-                    <a href="#" class="btn btn-outline-danger" role="button">刪除</a>
+                    <a href="{{ url_for('main.delete_record_type', id = t.id) }}" class="btn btn-outline-danger"
+                        role="button">刪除</a>
                 </div>
             </li>
             {% endfor %}

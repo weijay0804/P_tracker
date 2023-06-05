@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 01:48:42
 LastEditors: andy
-LastEditTime: 2023-06-06 04:56:38
+LastEditTime: 2023-06-06 04:59:31
 Description: app 主試圖
 '''
 
@@ -176,3 +176,22 @@ def edit_record_type(id):
         return redirect(url_for("main.record_types"))
 
     return render_template("main/edit_record_type.html", r_type=r_type)
+
+
+@main.route("/delete_record_type/<id>")
+@login_required
+def delete_record_type(id):
+    """刪除記帳種類"""
+
+    user = current_user
+    r_type = RecordType.query.get_or_404(id)
+
+    if r_type.user != user:
+        abort(403)
+
+    user.record_types.remove(r_type)
+    db.session.commit()
+
+    flash("刪除成功")
+
+    return redirect(url_for("main.record_types"))
