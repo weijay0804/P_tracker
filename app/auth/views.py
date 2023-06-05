@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 01:07:08
 LastEditors: andy
-LastEditTime: 2023-06-06 01:56:46
+LastEditTime: 2023-06-06 04:34:15
 Description: 使用者認證試圖
 '''
 
@@ -10,7 +10,7 @@ from flask import request, flash, render_template, redirect, url_for
 from flask_login import login_user, login_required, logout_user
 
 from app import db
-from app.db_model import User
+from app.db_model import User, RecordType
 from . import auth
 
 
@@ -43,6 +43,20 @@ def register():
         u = User(email=email, username=username, password=password1)
         db.session.add(u)
         db.session.commit()
+
+        # 先新增幾種預設的種類
+        type1 = RecordType(name="食物", desc="食物類別")
+        type2 = RecordType(name="交通", desc="交通類別")
+        type3 = RecordType(name="娛樂", desc="娛樂類別")
+
+        u.record_types.append(type1)
+        u.record_types.append(type2)
+        u.record_types.append(type3)
+
+        db.session.add_all([type1, type2, type3])
+
+        db.session.commit()
+
         flash('註冊成功')
         return redirect(url_for('auth.login'))
 
