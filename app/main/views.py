@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 01:48:42
 LastEditors: andy
-LastEditTime: 2023-06-06 06:25:26
+LastEditTime: 2023-06-06 06:36:17
 Description: app 主試圖
 '''
 
@@ -12,7 +12,7 @@ from flask import render_template, request, redirect, url_for, flash, abort
 from flask_login import login_required, current_user
 
 from app import db
-from app.db_model import Record, RecordType
+from app.db_model import Record, RecordType, Project
 from . import main
 
 
@@ -231,3 +231,31 @@ def projects():
     projects = user.projects
 
     return render_template("main/projects.html", projects=projects)
+
+
+@main.route("/add_project", methods=["GET", "POST"])
+@login_required
+def add_project():
+    """新增專案路由"""
+
+    user = current_user
+
+    if request.method == "POST":
+        name = request.form.get("name")
+        price = request.form.get("price")
+        desc = request.form.get("desc")
+        date = request.form.get("date")
+
+        date_object = datetime.strptime(date, "%Y-%m-%d").date()
+
+        project = Project(name=name, price=price, current_price=price, desc=desc, date=date_object)
+
+        user.projects.append(project)
+
+        db.session.add(project)
+        db.session.commit()
+
+        flash("新增成功")
+        return redirect(url_for("main.projects"))
+
+    return render_template("main/add_project.html")
