@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 01:48:42
 LastEditors: andy
-LastEditTime: 2023-06-06 06:36:17
+LastEditTime: 2023-06-06 06:50:59
 Description: app 主試圖
 '''
 
@@ -259,3 +259,39 @@ def add_project():
         return redirect(url_for("main.projects"))
 
     return render_template("main/add_project.html")
+
+
+@main.route("/edit_project/<id>", methods=["GET", "POST"])
+@login_required
+def edit_project(id):
+    """編輯專案路由"""
+
+    user = current_user
+    project = Project.query.get(id)
+
+    if project.user != user:
+        abort(403)
+
+    if request.method == "POST":
+        name = request.form.get("name")
+        price = request.form.get("price")
+        desc = request.form.get("desc")
+        date = request.form.get("date")
+
+        date_object = datetime.strptime(date, "%Y-%m-%d").date()
+
+        tmp_price = project.price - project.current_price
+
+        project.name = name
+        project.price = price
+        project.current_price = float(price) - tmp_price
+        project.desc = desc
+        project.date = date_object
+
+        db.session.commit()
+
+        flash("更新完成")
+
+        return redirect(url_for("main.projects"))
+
+    return render_template("main/edit_project.html", project=project)

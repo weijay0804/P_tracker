@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %} Edit Project {% endblock %}
+
+{% block page %}
+<div class="page-container">
+    <div class="items-container">
+        <div class="page-header">
+        </div>
+        <div class="login-container">
+            <div class="login-header">
+                <h4>編輯專案</h4>
+            </div>
+            <div class="form-container">
+                <form class="row g-3" action="#" method="POST">
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label">名稱</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{ project.name }}"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">預算</label>
+                        <input type="number" class="form-control" id="price" name="price" value="{{ project.price }}"
+                            step="0.1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="desc" class="form-label">備註</label>
+                        <input type="text" class="form-control" id="desc" name="desc" value="{{ project.desc }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">日期</label>
+                        <input type="date" class="form-control" id="date" name="date" value="{{ project.date }}">
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-outline-primary">更新</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
