@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 00:17:42
 LastEditors: andy
-LastEditTime: 2023-06-06 01:23:26
+LastEditTime: 2023-06-06 01:53:23
 Description: 初始化 app
 '''
 
@@ -29,5 +29,9 @@ def create_app() -> "Flask":
     from .auth import auth as auth_blueprint
 
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
+
+    from .main import main as main_blueprint
+
+    app.register_blueprint(main_blueprint, url_prefix='/')
 
     return app

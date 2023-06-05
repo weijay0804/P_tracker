@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block page %}
+<div class="page-container">
+    <div class="page-header">
+        <h2>歡迎使用 P記帳</h2>
+    </div>
+
+    <div class="items-container">
+        {% if current_user.is_authenticated %}
+        <div class="col-12">
+            <button class="btn btn-outline-success">新增一筆記帳</button>
+            <button class="btn btn-outline-success">新增一個專案</button>
+        </div>
+
+        {% else %}
+        <div class="col-12">
+            <a href="{{ url_for('auth.login') }}" class="btn btn-outline-success" role="button">請先登入</a>
+            <a href="{{ url_for('auth.register') }}" class="btn btn-outline-success" role="button">或是註冊</a>
+        </div>
+
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
