@@ -21,6 +21,15 @@
                             {% endfor %}
                         </select>
                     </div>
+                    <div class="mb-3">
+                        <label for="select_project" class="form-label">專案</label>
+                        <select class="form-select" aria-label="Default select example" name="select_project">
+                            <option value="0" selected>無</option>
+                            {% for project in projects %}
+                            <option value="{{ project.id }}">{{ project.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
                     <div class="mb-3">
                         <label for="name" class="form-label">名稱</label>

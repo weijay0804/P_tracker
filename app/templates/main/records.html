@@ -20,6 +20,13 @@
                 </div>
                 <p class="mb-1">$ {{ r.price}}</p>
                 <p class="mb-1">分類: <a href="{{ url_for('main.record_type', id=r.type.id) }}">{{ r.type.name }}</a></p>
+                <p class="mb-1">專案:
+                    {% if r.project %}
+                    <a href="#">{{ r.project.name }}</a>
+                    {% else %}
+                    無
+                    {% endif %}
+                </p>
                 <small>
                     備註:
                     {% if r.desc %}

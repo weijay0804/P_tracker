@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 01:48:42
 LastEditors: andy
-LastEditTime: 2023-06-06 06:53:55
+LastEditTime: 2023-06-06 07:13:52
 Description: app 主試圖
 '''
 
@@ -46,12 +46,19 @@ def add_record():
         desc = request.form.get("desc")
         date = request.form.get("date")
         type_id = request.form.get("select_type")
+        project_id = request.form.get("select_project")
 
         date_object = datetime.strptime(date, "%Y-%m-%d").date()
 
         record = Record(name=name, price=price, desc=desc, date=date_object)
 
         user.records.append(record)
+
+        if int(project_id) != 0:
+            project = Project.query.get_or_404(project_id)
+
+            project.current_price = project.current_price + float(price)
+            project.records.append(record)
 
         db.session.add(record)
         db.session.commit()
@@ -64,8 +71,9 @@ def add_record():
         return redirect(url_for("main.records"))
 
     r_types = user.record_types
+    u_projects = user.projects
 
-    return render_template("main/add_record.html", r_types=r_types)
+    return render_template("main/add_record.html", r_types=r_types, projects=u_projects)
 
 
 @main.route("/edit_record/<id>", methods=["GET", "POST"])
