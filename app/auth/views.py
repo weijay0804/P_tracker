@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 01:07:08
 LastEditors: andy
-LastEditTime: 2023-06-06 01:38:05
+LastEditTime: 2023-06-06 01:42:47
 Description: 使用者認證試圖
 '''
 
@@ -47,3 +47,24 @@ def register():
         return redirect(url_for('auth.login'))
 
     return render_template('auth/register.html')
+
+
+@auth.route('/login', methods=['GET', 'POST'])
+def login():
+    '''使用者登入路由'''
+
+    # 處理表單
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        u = User.query.filter_by(email=email).first()
+
+        if not u or not u.verify_password(password):
+            flash('帳號或密碼錯誤')
+
+            return redirect(url_for('auth.login'))
+        login_user(u)
+        return redirect(url_for('main.index'))
+
+    return render_template('auth/login.html')
