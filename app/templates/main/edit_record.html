@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} Add Record {% endblock %}
+{% block title %} Edit Record {% endblock %}
 
 {% block page %}
 <div class="page-container">
@@ -9,22 +9,22 @@
         </div>
         <div class="login-container">
             <div class="login-header">
-                <h4>新增一筆記帳</h4>
+                <h4>編輯記帳</h4>
             </div>
             <div class="form-container">
-                <form class="row g-3" action="{{ url_for('main.add_record') }}" method="POST">
+                <form class="row g-3" action="{{ url_for('main.edit_record', id = record.id) }}" method="POST">
                     <div class="mb-3">
                         <label for="name" class="form-label">名稱</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="早餐" required>
+                        <input type="text" class="form-control" id="name" name="name" value={{record.name}} required>
                     </div>
                     <div class="mb-3">
                         <label for="price" class="form-label">價格</label>
-                        <input type="number" class="form-control" id="price" name="price" placeholder="110" step="0.1"
-                            required>
+                        <input type="number" class="form-control" id="price" name="price" value="{{ record.price }}"
+                            step="0.1" required>
                     </div>
                     <div class="mb-3">
                         <label for="desc" class="form-label">備註</label>
-                        <input type="text" class="form-control" id="desc" name="desc" placeholder="茶葉蛋、豆漿">
+                        <input type="text" class="form-control" id="desc" name="desc" value="{{ record.desc}} ">
                     </div>
                     <div class="mb-3">
                         <label for="date" class="form-label">日期</label>
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="col-12">
-                        <button type="submit" class="btn btn-outline-success">新增</button>
+                        <button type="submit" class="btn btn-outline-primary">更新</button>
                     </div>
                 </form>
             </div>

@@ -11,9 +11,9 @@
 
     <div class="items-container">
         <a href="{{ url_for('main.add_record') }}" class="btn btn-outline-success" role="button">新增一筆記帳</a>
-        <div class="list-group">
+        <ul class="list-group">
             {% for r in records %}
-            <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+            <li class="list-group-item">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">名稱: {{ r.name }} </h5>
                     <small>{{ r.date }}</small>
@@ -27,9 +27,13 @@
                     無
                     {% endif %}
                 </small>
-            </a>
+                <div class="d-flex justify-content-start">
+                    <a href="{{ url_for('main.edit_record', id=r.id) }}" class="btn btn-outline-primary"
+                        role="button">編輯</a>
+                </div>
+            </li>
             {% endfor %}
-        </div>
+        </ul>
     </div>
 </div>
 

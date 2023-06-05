@@ -2,13 +2,13 @@
 Author: andy
 Date: 2023-06-06 01:48:42
 LastEditors: andy
-LastEditTime: 2023-06-06 03:29:39
+LastEditTime: 2023-06-06 03:58:25
 Description: app 主試圖
 '''
 
 from datetime import datetime
 
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, abort
 from flask_login import login_required, current_user
 
 from app import db
@@ -59,3 +59,36 @@ def add_record():
         return redirect(url_for("main.records"))
 
     return render_template("main/add_record.html")
+
+
+@main.route("/edit_record/<id>", methods=["GET", "POST"])
+@login_required
+def edit_record(id):
+    """編輯記帳紀錄路由"""
+
+    user = current_user
+    record = Record.query.get_or_404(id)
+
+    if record.user != user:
+        abort(403)
+
+    if request.method == "POST":
+        name = request.form.get("name")
+        price = request.form.get("price")
+        desc = request.form.get("desc")
+        date = request.form.get("date")
+
+        date_object = datetime.strptime(date, "%Y-%m-%d").date()
+
+        record.name = name
+        record.price = price
+        record.desc = desc
+        record.date = date_object
+
+        db.session.commit()
+
+        flash("更新成功")
+
+        return redirect(url_for("main.records"))
+
+    return render_template("main/edit_record.html", record=record)
