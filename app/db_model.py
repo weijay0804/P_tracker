@@ -2,11 +2,10 @@
 Author: andy
 Date: 2023-06-06 00:26:39
 LastEditors: andy
-LastEditTime: 2023-06-06 05:08:59
+LastEditTime: 2023-06-06 06:17:20
 Description: database ORM model
 '''
 
-import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from flask_login import UserMixin
@@ -34,6 +33,11 @@ class User(db.Model, UserMixin):
         'RecordType', back_populates="user", lazy="joined", cascade="delete, delete-orphan"
     )
 
+    # 建立與 project 一對多關係
+    projects = db.relationship(
+        'Project', back_populates="user", lazy="joined", cascade="delete, delete-orphan"
+    )
+
     @property
     def password(self):
         '''讓外部無法讀取 pssword 屬性'''
@@ -59,6 +63,7 @@ class Record(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     type_id = db.Column(db.Integer, db.ForeignKey('record_type.id'))
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
     name = db.Column(db.String(30), index=True)
     price = db.Column(db.Float)
     desc = db.Column(db.Text)
@@ -66,6 +71,7 @@ class Record(db.Model):
 
     user = db.relationship('User', back_populates="records")
     type = db.relationship('RecordType', back_populates="records")
+    project = db.relationship('Project', back_populates="records")
 
 
 class RecordType(db.Model):
@@ -84,6 +90,25 @@ class RecordType(db.Model):
     records = db.relationship(
         'Record', back_populates="type", lazy="joined", cascade="delete, delete-orphan"
     )
+
+
+class Project(db.Model):
+    """project table"""
+
+    __tablename__ = "project"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    name = db.Column(db.String(30), index=True)
+    desc = db.Column(db.Text)
+    price = db.Column(db.Float)
+    current_price = db.Column(db.Float)
+    date = db.Column(db.Date)
+
+    user = db.relationship('User', back_populates="project")
+
+    # 建立與 record table 一對多關係
+    records = db.relationship('Record', back_populates="project", lazy="joined")
 
 
 @login_manager.user_loader
