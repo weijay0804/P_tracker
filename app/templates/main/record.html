@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %} 記帳紀錄 {% endblock %}
+
+
+{% block page %}
+<div class="page-container">
+    <div class="page-header">
+        <h2>記帳紀錄</h2>
+    </div>
+
+    <div class="items-container">
+        <div class="list-group">
+            {% for r in record %}
+            <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">名稱: {{ r.name }} </h5>
+                    <small>{{ r.date }}</small>
+                </div>
+                <p class="mb-1">$ {{ r.price}}</p>
+                <small>備註: {{ r.desc }}</small>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
