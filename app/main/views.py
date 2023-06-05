@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 01:48:42
 LastEditors: andy
-LastEditTime: 2023-06-06 03:58:25
+LastEditTime: 2023-06-06 04:04:35
 Description: app 主試圖
 '''
 
@@ -92,3 +92,23 @@ def edit_record(id):
         return redirect(url_for("main.records"))
 
     return render_template("main/edit_record.html", record=record)
+
+
+@main.route("/delete_record/<id>")
+@login_required
+def delete_record(id):
+    """刪除記帳紀錄路由"""
+
+    user = current_user
+    record = Record.query.get_or_404(id)
+
+    if record.user != user:
+        abort(403)
+
+    user.records.remove(record)
+
+    db.session.commit()
+
+    flash("刪除成功")
+
+    return redirect(url_for("main.records"))
