@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 01:48:42
 LastEditors: andy
-LastEditTime: 2023-06-06 05:34:38
+LastEditTime: 2023-06-06 05:49:41
 Description: app 主試圖
 '''
 
@@ -131,6 +131,23 @@ def record_types():
     types = user.record_types
 
     return render_template("main/record_types.html", types=types)
+
+
+@main.route("/record_type/<id>")
+@login_required
+def record_type(id):
+    """單一記帳種類路由"""
+
+    user = current_user
+
+    r_type = RecordType.query.get_or_404(id)
+
+    if r_type.user != user:
+        abort(403)
+
+    records = r_type.records
+
+    return render_template("main/record_type.html", r_type=r_type, records=records)
 
 
 @main.route("/add_record_type", methods=["GET", "POST"])

@@ -15,7 +15,7 @@
             {% for t in types %}
             <li class="list-group-item">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">名稱: {{ t.name }} </h5>
+                    <h5 class="mb-1"><a href="{{ url_for('main.record_type', id=t.id) }}">名稱: {{ t.name }}</a> </h5>
                 </div>
                 <small>
                     備註:
