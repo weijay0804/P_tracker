@@ -2,16 +2,18 @@
 Author: andy
 Date: 2023-06-06 00:26:39
 LastEditors: andy
-LastEditTime: 2023-06-06 01:02:28
+LastEditTime: 2023-06-06 01:12:10
 Description: database ORM model
 '''
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from . import db
+from flask_login import UserMixin
+
+from . import db, login_manager
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     '''user table'''
 
     __tablename__ = 'user'
@@ -36,3 +38,9 @@ class User(db.Model):
         '''檢查使用者密碼是否正確'''
 
         return check_password_hash(self.password_hash, password)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    '''載入使用者'''
+    return User.query.get(int(user_id))

@@ -2,16 +2,18 @@
 Author: andy
 Date: 2023-06-06 00:17:42
 LastEditors: andy
-LastEditTime: 2023-06-06 01:08:41
+LastEditTime: 2023-06-06 01:23:26
 Description: 初始化 app
 '''
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 from config import Config
 
 db = SQLAlchemy()
+login_manager = LoginManager()
 
 
 def create_app() -> "Flask":
@@ -22,6 +24,7 @@ def create_app() -> "Flask":
     Config.init_app(app)
 
     db.init_app(app)
+    login_manager.init_app(app)
 
     from .auth import auth as auth_blueprint
 
