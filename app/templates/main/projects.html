@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %} 專案一覽 {% endblock %}
+
+
+{% block page %}
+<div class="page-container">
+    <div class="page-header">
+        <h2>專案一覽</h2>
+    </div>
+
+    <div class="items-container">
+        <a href="#" class="btn btn-outline-success" role="button">新增一個專案</a>
+        <ul class="list-group">
+            {% for p in projects %}
+            <li class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1"><a href="#">名稱: {{ p.name }}</a> </h5>
+                </div>
+                <small>
+                    備註:
+                    {% if p.desc %}
+                    {{ p.desc }}
+                    {% else %}
+                    無
+                    {% endif %}
+                </small>
+                <div class="d-flex justify-content-start">
+                    <a href="#" class="btn btn-outline-primary" role="button">編輯</a>
+                    <a href="#" class="btn btn-outline-danger" role="button">刪除</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

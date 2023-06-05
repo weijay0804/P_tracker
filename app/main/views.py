@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 01:48:42
 LastEditors: andy
-LastEditTime: 2023-06-06 05:49:41
+LastEditTime: 2023-06-06 06:25:26
 Description: app 主試圖
 '''
 
@@ -219,3 +219,15 @@ def delete_record_type(id):
     flash("刪除成功")
 
     return redirect(url_for("main.record_types"))
+
+
+@main.route("/projects")
+@login_required
+def projects():
+    """所有專案路由"""
+
+    user = current_user
+
+    projects = user.projects
+
+    return render_template("main/projects.html", projects=projects)
