@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 
-{% block title %} 記帳紀錄 {% endblock %}
+{% block title %} 專案 {{ project.name }} {% endblock %}
 
 
 {% block page %}
 <div class="page-container">
     <div class="page-header">
-        <h2>記帳紀錄</h2>
+        <h2>專案: {{ project.name }}</h2>
     </div>
 
     <div class="items-container">
-        <a href="{{ url_for('main.add_record') }}" class="btn btn-outline-success" role="button">新增一筆記帳</a>
+        <h3>記帳紀錄</h3>
         <ul class="list-group">
             {% for r in records %}
             <li class="list-group-item">
@@ -20,13 +20,6 @@
                 </div>
                 <p class="mb-1">$ {{ r.price}}</p>
                 <p class="mb-1">分類: <a href="{{ url_for('main.record_type', id=r.type.id) }}">{{ r.type.name }}</a></p>
-                <p class="mb-1">專案:
-                    {% if r.project %}
-                    <a href="{{ url_for('main.project', id=r.project.id)}}">{{ r.project.name }}</a>
-                    {% else %}
-                    無
-                    {% endif %}
-                </p>
                 <small>
                     備註:
                     {% if r.desc %}

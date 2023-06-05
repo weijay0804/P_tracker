@@ -15,7 +15,7 @@
             {% for p in projects %}
             <li class="list-group-item">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1"><a href="#">名稱: {{ p.name }}</a> </h5>
+                    <h5 class="mb-1"><a href="{{ url_for('main.project', id = p.id) }}">名稱: {{ p.name }}</a> </h5>
                 </div>
                 <p class="mb-1">預算 $ {{ p.price}}</p>
                 <p class="mb-1">目前餘額 $ {{ p.current_price}}</p>

@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 01:48:42
 LastEditors: andy
-LastEditTime: 2023-06-06 07:13:52
+LastEditTime: 2023-06-06 07:22:43
 Description: app 主試圖
 '''
 
@@ -239,6 +239,22 @@ def projects():
     projects = user.projects
 
     return render_template("main/projects.html", projects=projects)
+
+
+@main.route("/project/<id>")
+@login_required
+def project(id):
+    """單一專案路由"""
+
+    user = current_user
+    u_project = Project.query.get_or_404(id)
+
+    if u_project.user != user:
+        abort(403)
+
+    records = u_project.records
+
+    return render_template("main/project.html", project=u_project, records=records)
 
 
 @main.route("/add_project", methods=["GET", "POST"])
