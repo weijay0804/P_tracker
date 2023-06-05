@@ -19,6 +19,7 @@
                     <small>{{ r.date }}</small>
                 </div>
                 <p class="mb-1">$ {{ r.price}}</p>
+                <p class="mb-1">分類: <a href="#">{{ r.type.name }}</a></p>
                 <small>
                     備註:
                     {% if r.desc %}
