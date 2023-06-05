@@ -2,12 +2,12 @@
 Author: andy
 Date: 2023-06-06 01:07:08
 LastEditors: andy
-LastEditTime: 2023-06-06 01:42:47
+LastEditTime: 2023-06-06 01:56:46
 Description: 使用者認證試圖
 '''
 
 from flask import request, flash, render_template, redirect, url_for
-from flask_login import login_user
+from flask_login import login_user, login_required, logout_user
 
 from app import db
 from app.db_model import User
@@ -68,3 +68,14 @@ def login():
         return redirect(url_for('main.index'))
 
     return render_template('auth/login.html')
+
+
+@auth.route('/logout')
+@login_required
+def logout():
+    '''使用者登出路由'''
+
+    # 更新使用者登入時間
+    logout_user()
+    flash('你已經登出')
+    return redirect(url_for('main.index'))
