@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %} Edit Record Type {% endblock %}
+
+{% block page %}
+<div class="page-container">
+    <div class="items-container">
+        <div class="page-header">
+        </div>
+        <div class="login-container">
+            <div class="login-header">
+                <h4>編輯種類</h4>
+            </div>
+            <div class="form-container">
+                <form class="row g-3" action="{{ url_for('main.edit_record_type', id=r_type.id) }}" method="POST">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">名稱</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{ r_type.name }}"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="desc" class="form-label">備註</label>
+                        <input type="text" class="form-control" id="desc" name="desc" value="{{ r_type.desc }}">
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-outline-primary">更新</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

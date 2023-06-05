@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 01:48:42
 LastEditors: andy
-LastEditTime: 2023-06-06 04:49:28
+LastEditTime: 2023-06-06 04:56:38
 Description: app 主試圖
 '''
 
@@ -149,3 +149,30 @@ def add_record_type():
         return redirect(url_for("main.record_types"))
 
     return render_template("main/add_record_type.html")
+
+
+@main.route("/edit_record_type/<id>", methods=["GET", "POST"])
+@login_required
+def edit_record_type(id):
+    """編輯記帳種類路由"""
+
+    user = current_user
+    r_type = RecordType.query.get_or_404(id)
+
+    if r_type.user != user:
+        abort(403)
+
+    if request.method == "POST":
+        name = request.form.get("name")
+        desc = request.form.get("desc")
+
+        r_type.name = name
+        r_type.desc = desc
+
+        db.session.commit()
+
+        flash("更新成功")
+
+        return redirect(url_for("main.record_types"))
+
+    return render_template("main/edit_record_type.html", r_type=r_type)
