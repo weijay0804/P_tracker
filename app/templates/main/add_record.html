@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %} Add Record {% endblock %}
+
+{% block page %}
+<div class="page-container">
+    <div class="items-container">
+        <div class="page-header">
+        </div>
+        <div class="login-container">
+            <div class="login-header">
+                <h4>新增一筆記帳</h4>
+            </div>
+            <div class="form-container">
+                <form class="row g-3" action="{{ url_for('main.add_record') }}" method="POST">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">名稱</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="早餐" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">價格</label>
+                        <input type="number" class="form-control" id="price" name="price" placeholder="110" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="desc" class="form-label">備註</label>
+                        <input type="text" class="form-control" id="desc" name="desc" placeholder="茶葉蛋、豆漿">
+                    </div>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">日期</label>
+                        <input type="date" class="form-control" id="date" name="date">
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-outline-success">新增</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    // NOTE 使用 ChatGPT
+    // 取得目前日期
+    var currentDate = new Date();
+
+    // 轉成 UTC8
+    var utcOffset = 8;
+    var utcOffsetMilliseconds = utcOffset * 60 * 60 * 1000;
+    var utcPlus8Date = new Date(currentDate.getTime() + utcOffsetMilliseconds);
+
+    // 轉換格式成 YYYY-MM-DD
+    var formattedDate = utcPlus8Date.toISOString().split('T')[0];
+
+    // 設定默認日期
+    document.getElementById('date').value = formattedDate;
+</script>
+{% endblock %}

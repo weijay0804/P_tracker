@@ -10,15 +10,23 @@
     </div>
 
     <div class="items-container">
+        <a href="{{ url_for('main.add_record') }}" class="btn btn-outline-success" role="button">新增一筆記帳</a>
         <div class="list-group">
-            {% for r in record %}
+            {% for r in records %}
             <a href="#" class="list-group-item list-group-item-action" aria-current="true">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">名稱: {{ r.name }} </h5>
                     <small>{{ r.date }}</small>
                 </div>
                 <p class="mb-1">$ {{ r.price}}</p>
-                <small>備註: {{ r.desc }}</small>
+                <small>
+                    備註:
+                    {% if r.desc %}
+                    {{ r.desc }}
+                    {% else %}
+                    無
+                    {% endif %}
+                </small>
             </a>
             {% endfor %}
         </div>

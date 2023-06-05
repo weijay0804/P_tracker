@@ -9,7 +9,7 @@
     <div class="items-container">
         {% if current_user.is_authenticated %}
         <div class="col-12">
-            <button class="btn btn-outline-success">新增一筆記帳</button>
+            <a href="{{ url_for('main.add_record') }}" class="btn btn-outline-success" role="button">新增一筆記帳</a>
             <button class="btn btn-outline-success">新增一個專案</button>
         </div>
 
