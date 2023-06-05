@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 01:48:42
 LastEditors: andy
-LastEditTime: 2023-06-06 04:39:04
+LastEditTime: 2023-06-06 04:49:28
 Description: app 主試圖
 '''
 
@@ -12,7 +12,7 @@ from flask import render_template, request, redirect, url_for, flash, abort
 from flask_login import login_required, current_user
 
 from app import db
-from app.db_model import Record
+from app.db_model import Record, RecordType
 from . import main
 
 
@@ -124,3 +124,28 @@ def record_types():
     types = user.record_types
 
     return render_template("main/record_types.html", types=types)
+
+
+@main.route("/add_record_type", methods=["GET", "POST"])
+@login_required
+def add_record_type():
+    """新增記帳種類路由"""
+
+    user = current_user
+
+    if request.method == "POST":
+        name = request.form.get("name")
+        desc = request.form.get("desc")
+
+        r_type = RecordType(name=name, desc=desc)
+
+        user.record_types.append(r_type)
+
+        db.session.add(r_type)
+        db.session.commit()
+
+        flash("新增成功")
+
+        return redirect(url_for("main.record_types"))
+
+    return render_template("main/add_record_type.html")

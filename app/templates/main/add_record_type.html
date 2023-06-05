@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %} Add Record Type {% endblock %}
+
+{% block page %}
+<div class="page-container">
+    <div class="items-container">
+        <div class="page-header">
+        </div>
+        <div class="login-container">
+            <div class="login-header">
+                <h4>新增一個種類</h4>
+            </div>
+            <div class="form-container">
+                <form class="row g-3" action="{{ url_for('main.add_record_type') }}" method="POST">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">名稱</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="交通" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="desc" class="form-label">備註</label>
+                        <input type="text" class="form-control" id="desc" name="desc" placeholder="交通種類">
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-outline-success">新增</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
