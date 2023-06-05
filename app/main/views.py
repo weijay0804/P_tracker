@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 01:48:42
 LastEditors: andy
-LastEditTime: 2023-06-06 06:50:59
+LastEditTime: 2023-06-06 06:53:55
 Description: app 主試圖
 '''
 
@@ -295,3 +295,22 @@ def edit_project(id):
         return redirect(url_for("main.projects"))
 
     return render_template("main/edit_project.html", project=project)
+
+
+@main.route("/delete_projcet/<id>")
+@login_required
+def delete_project(id):
+    """刪除專案路由"""
+
+    user = current_user
+    project = Project.query.get(id)
+
+    if project.user != user:
+        abort(403)
+
+    user.projects.remove(project)
+    db.session.commit()
+
+    flash("刪除成功")
+
+    return redirect(url_for("main.projects"))
