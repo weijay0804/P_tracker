@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 00:26:39
 LastEditors: andy
-LastEditTime: 2023-06-06 04:30:03
+LastEditTime: 2023-06-06 05:08:59
 Description: database ORM model
 '''
 
@@ -58,12 +58,14 @@ class Record(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    type_id = db.Column(db.Integer, db.ForeignKey('record_type.id'))
     name = db.Column(db.String(30), index=True)
     price = db.Column(db.Float)
     desc = db.Column(db.Text)
     date = db.Column(db.Date)
 
     user = db.relationship('User', back_populates="records")
+    type = db.relationship('RecordType', back_populates="records")
 
 
 class RecordType(db.Model):
@@ -77,6 +79,11 @@ class RecordType(db.Model):
     desc = db.Column(db.Text)
 
     user = db.relationship('User', back_populates="record_types")
+
+    # 建立與 record table 一對多關係
+    records = db.relationship(
+        'Record', back_populates="type", lazy="joined", cascade="delete, delete-orphan"
+    )
 
 
 @login_manager.user_loader
