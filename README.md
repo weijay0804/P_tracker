@@ -3,7 +3,7 @@
 > 一個簡單的記帳軟體
 
 ### Usage
-* Pull 到本地端
+* Clone 到本地端
 * 安裝相關套件
   > 如果是使用 `pipenv` 可以直接 `pipenv install`
 * 設定環境變數
