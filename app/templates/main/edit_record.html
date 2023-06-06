@@ -18,13 +18,51 @@
             <div class="form-container">
                 <form class="row g-3" action="{{ url_for('main.edit_record', id = record.id) }}" method="POST">
                     <div class="mb-3">
+                        <label for="type" class="form-label">分類</label>
+                        <select class="form-select" aria-label="Default select example" name="select_type">
+                            {% for r_type in r_types %}
+                            {% if r_type == record.type %}
+                            <option value="{{ r_type.id }}" selected>{{ r_type.name }}</option>
+                            {% else %}
+                            <option value="{{ r_type.id }}">{{ r_type.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="select_project" class="form-label">專案</label>
+                        <select class="form-select" aria-label="Default select example" name="select_project">
+                            <option value="0" selected>無</option>
+                            {% for project in projects %}
+                            {% if project == record.project %}
+                            <option value="{{ project.id }}" selected>{{ project.name }}</option>
+                            {% else %}
+                            <option value="{{ project.id }}">{{ project.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="select_in_out" class="form-label">收入或支出</label>
+                        <select class="form-select" aria-label="Default select example" name="select_in_out">
+
+                            {% if is_in %}
+                            <option value="0">支出</option>
+                            <option value="1" selected>收入</option>
+                            {% else %}
+                            <option value="0" selected>支出</option>
+                            <option value="1">收入</option>
+                            {% endif %}
+
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="name" class="form-label">名稱</label>
                         <input type="text" class="form-control" id="name" name="name" value={{record.name}} required>
                     </div>
                     <div class="mb-3">
                         <label for="price" class="form-label">價格</label>
-                        <input type="number" class="form-control" id="price" name="price" value="{{ record.price }}"
-                            required>
+                        <input type="number" class="form-control" id="price" name="price" value="{{ pprice }}" required>
                     </div>
                     <div class="mb-3">
                         <label for="desc" class="form-label">備註</label>

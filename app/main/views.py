@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 01:48:42
 LastEditors: andy
-LastEditTime: 2023-06-06 09:34:07
+LastEditTime: 2023-06-06 10:43:26
 Description: app 主試圖
 '''
 
@@ -103,8 +103,51 @@ def edit_record(id):
         price = request.form.get("price")
         desc = request.form.get("desc")
         date = request.form.get("date")
+        type_id = request.form.get("select_type")
+        project_id = request.form.get("select_project")
+        select_in_out = request.form.get("select_in_out")
 
         date_object = datetime.strptime(date, "%Y-%m-%d").date()
+
+        type_obj = RecordType.query.get_or_404(type_id)
+        project_obj = Project.query.get_or_404(project_id)
+
+        # 支出
+        if int(select_in_out) == 0:
+            if int(price) > 0:
+                price = -int(price)
+
+        # 收入
+        else:
+            if int(price) < 0:
+                price = -int(price)
+
+        # 變更分類
+        if type_obj != record.type:
+            record.type_id = type_obj.id
+
+        # 變更專案
+        if int(project_id) != 0:
+            # 如果變更專案
+            if record.project != project_obj:
+                old_project = record.project
+
+                # 處理餘額
+                project_obj.current_price += record.price
+                old_project.current_price -= record.price
+
+                # 處理關聯
+                project_obj.records.append(record)
+
+            # 依照原有的專案
+            else:
+                # 處理餘額
+                project_obj.current_price -= record.price
+                project_obj.current_price += int(price)
+
+        else:
+            project_obj.current_price += record.price
+            project_obj.records.remove(record)
 
         record.name = name
         record.price = price
@@ -117,7 +160,22 @@ def edit_record(id):
 
         return redirect(url_for("main.records"))
 
-    return render_template("main/edit_record.html", record=record)
+    r_types = user.record_types
+    projects = user.projects
+
+    is_in = bool(record.price > 0)
+
+    if not is_in:
+        pprice = -record.price
+
+    return render_template(
+        "main/edit_record.html",
+        record=record,
+        r_types=r_types,
+        projects=projects,
+        is_in=is_in,
+        pprice=pprice,
+    )
 
 
 @main.route("/delete_record/<id>")
