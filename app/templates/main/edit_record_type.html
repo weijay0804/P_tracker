@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} Edit Record Type {% endblock %}
+{% block title %} 編輯分類: {{ r_type.name }} {% endblock %}
 
 {% block page %}
 <div class="page-container">
@@ -12,7 +12,7 @@
                 <h4>
                     <img src="{{ url_for('static', filename = 'images/edit.png') }}"
                         class="d-inline-block align-text-top">
-                    編輯種類
+                    編輯分類
                 </h4>
             </div>
             <div class="form-container">

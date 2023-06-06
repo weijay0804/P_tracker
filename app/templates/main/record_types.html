@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} 種類一覽 {% endblock %}
+{% block title %} 分類一覽 {% endblock %}
 
 
 {% block page %}
@@ -9,7 +9,7 @@
         <h2>
             <img src="{{ url_for('static', filename = 'images/collection.png') }}"
                 class="d-inline-block align-text-top">
-            記帳種類
+            記帳分類
         </h2>
     </div>
 
@@ -18,7 +18,7 @@
             <a href="{{ url_for('main.add_record_type') }}" class="btn btn-outline-primary" role="button">
                 <img src="{{ url_for('static', filename = 'images/add.png') }}" width="24" height="24"
                     class="d-inline-block align-text-top">
-                新增一個種類
+                新增一個分類
             </a>
         </div>
 
