@@ -9,7 +9,11 @@
         </div>
         <div class="login-container">
             <div class="login-header">
-                <h4>登入你的帳戶</h4>
+                <h4>
+                    <img src="{{ url_for('static', filename = 'images/login.png') }}"
+                        class="d-inline-block align-text-top">
+                    登入你的帳戶
+                </h4>
             </div>
             <div class="form-container">
                 <form class="row g-3" action="{{ url_for('auth.login') }}" method="POST">

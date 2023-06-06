@@ -6,11 +6,22 @@
 {% block page %}
 <div class="page-container">
     <div class="page-header">
-        <h2>記帳紀錄</h2>
+
+        <h2>
+            <img src="{{ url_for('static', filename = 'images/record.png') }}" class="d-inline-block align-text-top">
+            記帳紀錄
+        </h2>
     </div>
 
     <div class="items-container">
-        <a href="{{ url_for('main.add_record') }}" class="btn btn-outline-success" role="button">新增一筆記帳</a>
+        <div class="mb-3">
+            <a href="{{ url_for('main.add_record') }}" class="btn btn-outline-primary" role="button">
+                <img src="{{ url_for('static', filename = 'images/add.png') }}" width="24" height="24"
+                    class="d-inline-block align-text-top">
+                新增一筆記帳
+            </a>
+        </div>
+
         {% if not records %}
         <h4>還沒有任何紀錄</h4>
         {% endif %}
@@ -39,10 +50,16 @@
                     {% endif %}
                 </small>
                 <div class="d-flex justify-content-start">
-                    <a href="{{ url_for('main.edit_record', id=r.id) }}" class="btn btn-outline-primary"
-                        role="button">編輯</a>
-                    <a href="{{ url_for('main.delete_record', id=r.id) }}" class="btn btn-outline-danger"
-                        role="button">刪除</a>
+                    <a href="{{ url_for('main.edit_record', id=r.id) }}" class="btn btn-outline-success" role="button">
+                        <img src="{{ url_for('static', filename = 'images/edit.png') }}" width="24" height="24"
+                            class="d-inline-block align-text-top">
+                        編輯
+                    </a>
+                    <a href="{{ url_for('main.delete_record', id=r.id) }}" class="btn btn-outline-danger" role="button">
+                        <img src="{{ url_for('static', filename = 'images/delete.png') }}" width="24" height="24"
+                            class="d-inline-block align-text-top">
+                        刪除
+                    </a>
                 </div>
             </li>
             {% endfor %}

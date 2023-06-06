@@ -14,7 +14,11 @@
     <div class="items-container">
         <div class="login-container">
             <div class="login-header">
-                <h4>新增一筆記帳</h4>
+                <h4>
+                    <img src="{{ url_for('static', filename = 'images/add.png') }}"
+                        class="d-inline-block align-text-top">
+                    新增一筆記帳
+                </h4>
             </div>
             <div class="form-container">
                 <form class="row g-3" action="{{ url_for('main.add_record') }}" method="POST">
@@ -65,9 +69,17 @@
                     </div>
                     <div class="col-12">
                         {% if r_types %}
-                        <button type="submit" class="btn btn-outline-success">新增</button>
+                        <button type="submit" class="btn btn-outline-primary">
+                            <img src="{{ url_for('static', filename = 'images/add.png') }}" width="24" height="24"
+                                class="d-inline-block align-text-top">
+                            新增
+                        </button>
                         {% else %}
-                        <button type="submit" class="btn btn-outline-danger" disabled>新增</button>
+                        <button type="submit" class="btn btn-outline-primary" disabled>
+                            <img src="{{ url_for('static', filename = 'images/add.png') }}" width="24" height="24"
+                                class="d-inline-block align-text-top">
+                            新增
+                        </button>
                         {% endif %}
                     </div>
                 </form>

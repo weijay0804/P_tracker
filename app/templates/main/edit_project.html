@@ -9,7 +9,11 @@
         </div>
         <div class="login-container">
             <div class="login-header">
-                <h4>編輯專案</h4>
+                <h4>
+                    <img src="{{ url_for('static', filename = 'images/edit.png') }}"
+                        class="d-inline-block align-text-top">
+                    編輯專案
+                </h4>
             </div>
             <div class="form-container">
                 <form class="row g-3" action="#" method="POST">
@@ -34,7 +38,11 @@
                     </div>
 
                     <div class="col-12">
-                        <button type="submit" class="btn btn-outline-primary">更新</button>
+                        <button type="submit" class="btn btn-outline-success">
+                            <img src="{{ url_for('static', filename = 'images/edit.png') }}" width="24" height="24"
+                                class="d-inline-block align-text-top">
+                            更新
+                        </button>
                     </div>
                 </form>
             </div>

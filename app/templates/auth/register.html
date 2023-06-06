@@ -5,7 +5,10 @@
 {% block page %}
 <div class="page-container">
     <div class="page-header">
-        <h1>註冊</h1>
+        <h4>
+            <img src="{{ url_for('static', filename = 'images/register.png') }}" class="d-inline-block align-text-top">
+            註冊
+        </h4>
     </div>
     <div class="items-container">
         <div class="form-container">
@@ -28,7 +31,7 @@
                     <label for="exampleInputPassword1" class="form-label">確認密碼</label>
                     <input type="password" class="form-control" id="exampleInputPassword1" name="password2" required>
                 </div>
-                <div class="col-12">
+                <div class="col-12 mb-3">
                     <button type="submit" class="btn btn-outline-success">送出</button>
                 </div>
             </form>

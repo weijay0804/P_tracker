@@ -6,11 +6,21 @@
 {% block page %}
 <div class="page-container">
     <div class="page-header">
-        <h2>專案一覽</h2>
+        <h2>
+            <img src="{{ url_for('static', filename = 'images/project.png') }}" class="d-inline-block align-text-top">
+            專案一覽
+        </h2>
     </div>
 
     <div class="items-container">
-        <a href="{{ url_for('main.add_project') }}" class="btn btn-outline-success" role="button">新增一個專案</a>
+        <div class="mb-3">
+            <a href="{{ url_for('main.add_project') }}" class="btn btn-outline-primary" role="button">
+                <img src="{{ url_for('static', filename = 'images/add.png') }}" width="24" height="24"
+                    class="d-inline-block align-text-top">
+                新增一個專案
+            </a>
+        </div>
+
         {% if not projects %}
         <h4>還沒有任何專案</h4>
         {% endif %}
@@ -31,10 +41,18 @@
                     {% endif %}
                 </small>
                 <div class="d-flex justify-content-start">
-                    <a href="{{ url_for('main.edit_project', id = p.id) }}" class="btn btn-outline-primary"
-                        role="button">編輯</a>
+                    <a href="{{ url_for('main.edit_project', id = p.id) }}" class="btn btn-outline-success"
+                        role="button">
+                        <img src="{{ url_for('static', filename = 'images/edit.png') }}" width="24" height="24"
+                            class="d-inline-block align-text-top">
+                        編輯
+                    </a>
                     <a href="{{ url_for('main.delete_project', id = p.id) }}" class="btn btn-outline-danger"
-                        role="button">刪除</a>
+                        role="button">
+                        <img src="{{ url_for('static', filename = 'images/delete.png') }}" width="24" height="24"
+                            class="d-inline-block align-text-top">
+                        刪除
+                    </a>
                 </div>
             </li>
             {% endfor %}

@@ -3,22 +3,36 @@
 {% block page %}
 <div class="page-container">
     <div class="page-header">
-        <h2>歡迎使用 P記帳</h2>
+        <p class="text-center fs-2">歡迎使用 P記帳</p>
     </div>
 
-    <div class="items-container">
+    <div class="items-container index">
         {% if current_user.is_authenticated %}
         <div class="col-12">
-            <a href="{{ url_for('main.add_record') }}" class="btn btn-outline-success" role="button">新增一筆記帳</a>
-            <button class="btn btn-outline-success">新增一個專案</button>
+            <a href="{{ url_for('main.add_record') }}" class="btn btn-outline-primary" role="button">
+                <img src="{{ url_for('static', filename = 'images/collection.png') }}" width="24" height="24"
+                    class="d-inline-block align-text-top">
+                新增一筆記帳
+            </a>
+            <a href="{{ url_for('main.add_project') }}" class="btn btn-outline-primary" role="button">
+                <img src="{{ url_for('static', filename = 'images/project.png') }}" width="24" height="24"
+                    class="d-inline-block align-text-top">
+                新增一個專案
+            </a>
         </div>
-
         {% else %}
         <div class="col-12">
-            <a href="{{ url_for('auth.login') }}" class="btn btn-outline-success" role="button">請先登入</a>
-            <a href="{{ url_for('auth.register') }}" class="btn btn-outline-success" role="button">或是註冊</a>
+            <a href="{{ url_for('auth.login') }}" class="btn btn-outline-primary" role="button">
+                <img src="{{ url_for('static', filename = 'images/login.png') }}" width="24" height="24"
+                    class="d-inline-block align-text-top">
+                請先登入
+            </a>
+            <a href="{{ url_for('auth.register') }}" class="btn btn-outline-success" role="button">
+                <img src="{{ url_for('static', filename = 'images/register.png') }}" width="24" height="24"
+                    class="d-inline-block align-text-top">
+                或是註冊
+            </a>
         </div>
-
         {% endif %}
     </div>
 </div>
