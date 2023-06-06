@@ -11,6 +11,16 @@
 
     <div class="items-container">
         <h3>記帳紀錄</h3>
+        {% if not records %}
+        <h4>還沒有任何紀錄</h4>
+        <div class="mb-3">
+            <a href="{{ url_for('main.add_record') }}" class="btn btn-outline-primary" role="button">
+                <img src="{{ url_for('static', filename = 'images/add.png') }}" width="24" height="24"
+                    class="d-inline-block align-text-top">
+                新增一筆記帳
+            </a>
+        </div>
+        {% endif %}
         <ul class="list-group">
             {% for r in records %}
             <li class="list-group-item">
