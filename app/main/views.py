@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 01:48:42
 LastEditors: andy
-LastEditTime: 2023-06-06 07:51:01
+LastEditTime: 2023-06-06 09:34:07
 Description: app 主試圖
 '''
 
@@ -53,13 +53,13 @@ def add_record():
 
         # 支出
         if int(select_in_out) == 0:
-            if float(price) > 0:
-                price = -float(price)
+            if int(price) > 0:
+                price = -int(price)
 
         # 收入
         else:
-            if float(price) < 0:
-                price = -float(price)
+            if int(price) < 0:
+                price = -int(price)
 
         record = Record(name=name, price=price, desc=desc, date=date_object)
 
@@ -68,7 +68,7 @@ def add_record():
         if int(project_id) != 0:
             project = Project.query.get_or_404(project_id)
 
-            project.current_price = project.current_price + float(price)
+            project.current_price = project.current_price + int(price)
             project.records.append(record)
 
         db.session.add(record)
@@ -326,7 +326,7 @@ def edit_project(id):
 
         project.name = name
         project.price = price
-        project.current_price = float(price) - tmp_price
+        project.current_price = int(price) - tmp_price
         project.desc = desc
         project.date = date_object
 

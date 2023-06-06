@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 00:26:39
 LastEditors: andy
-LastEditTime: 2023-06-06 06:24:30
+LastEditTime: 2023-06-06 09:31:30
 Description: database ORM model
 '''
 
@@ -65,7 +65,7 @@ class Record(db.Model):
     type_id = db.Column(db.Integer, db.ForeignKey('record_type.id'))
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
     name = db.Column(db.String(30), index=True)
-    price = db.Column(db.Float)
+    price = db.Column(db.Integer)
     desc = db.Column(db.Text)
     date = db.Column(db.Date)
 
@@ -101,8 +101,8 @@ class Project(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     name = db.Column(db.String(30), index=True)
     desc = db.Column(db.Text)
-    price = db.Column(db.Float)
-    current_price = db.Column(db.Float)
+    price = db.Column(db.Integer)
+    current_price = db.Column(db.Integer)
     date = db.Column(db.Date)
 
     user = db.relationship('User', back_populates="projects")
