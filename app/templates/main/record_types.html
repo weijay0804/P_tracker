@@ -46,13 +46,35 @@
                             class="d-inline-block align-text-top">
                         編輯
                     </a>
-                    <a href="{{ url_for('main.delete_record_type', id = t.id) }}" class="btn btn-outline-danger"
-                        role="button">
+                    <a href="#" class="btn btn-outline-danger" role="button" data-bs-toggle="modal"
+                        data-bs-target="#typeDeleteModal">
                         <img src="{{ url_for('static', filename = 'images/delete.png') }}" width="24" height="24"
                             class="d-inline-block align-text-top">
                         刪除
                     </a>
                 </div>
+
+                <div class="modal fade" id="typeDeleteModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">確定要刪除分類: {{ t.name }} 嗎？</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                注意 ** 會連帶把屬於這個分類的記帳紀錄也一起刪除 ** ，
+                                刪除後就無法復原喔！
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <a href="{{ url_for('main.delete_record_type', id = t.id) }}"
+                                    class="btn btn-outline-danger" role="button">確定刪除</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </li>
             {% endfor %}
         </ul>
