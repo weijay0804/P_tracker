@@ -3,10 +3,15 @@
 {% block title %} Add Record {% endblock %}
 
 {% block page %}
+
+{% if not r_types %}
+<div class="alert alert-danger" role="alert">
+    你還沒有任何的分類，請先新增一個分類 <a href="{{ url_for('main.add_record_type') }}" class="alert-link">新增分類</a>
+</div>
+{% endif %}
+
 <div class="page-container">
     <div class="items-container">
-        <div class="page-header">
-        </div>
         <div class="login-container">
             <div class="login-header">
                 <h4>新增一筆記帳</h4>
@@ -15,11 +20,15 @@
                 <form class="row g-3" action="{{ url_for('main.add_record') }}" method="POST">
                     <div class="mb-3">
                         <label for="type" class="form-label">分類</label>
+                        {% if r_types %}
                         <select class="form-select" aria-label="Default select example" name="select_type">
                             {% for r_type in r_types %}
                             <option value="{{ r_type.id }}">{{ r_type.name }}</option>
                             {% endfor %}
                         </select>
+                        {% else %}
+                        <h4>還沒有任何分類</h4>
+                        {% endif %}
                     </div>
                     <div class="mb-3">
                         <label for="select_project" class="form-label">專案</label>
@@ -54,10 +63,12 @@
                         <label for="date" class="form-label">日期</label>
                         <input type="date" class="form-control" id="date" name="date">
                     </div>
-
-
                     <div class="col-12">
+                        {% if r_types %}
                         <button type="submit" class="btn btn-outline-success">新增</button>
+                        {% else %}
+                        <button type="submit" class="btn btn-outline-danger" disabled>新增</button>
+                        {% endif %}
                     </div>
                 </form>
             </div>

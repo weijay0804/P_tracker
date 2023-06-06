@@ -11,6 +11,9 @@
 
     <div class="items-container">
         <a href="{{ url_for('main.add_project') }}" class="btn btn-outline-success" role="button">新增一個專案</a>
+        {% if not projects %}
+        <h4>還沒有任何專案</h4>
+        {% endif %}
         <ul class="list-group">
             {% for p in projects %}
             <li class="list-group-item">

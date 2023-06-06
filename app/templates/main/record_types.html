@@ -11,6 +11,9 @@
 
     <div class="items-container">
         <a href="{{ url_for('main.add_record_type') }}" class="btn btn-outline-success" role="button">新增一個種類</a>
+        {% if not types %}
+        <h4>還沒有任何分類</h4>
+        {% endif %}
         <ul class="list-group">
             {% for t in types %}
             <li class="list-group-item">

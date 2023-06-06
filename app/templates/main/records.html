@@ -11,6 +11,9 @@
 
     <div class="items-container">
         <a href="{{ url_for('main.add_record') }}" class="btn btn-outline-success" role="button">新增一筆記帳</a>
+        {% if not records %}
+        <h4>還沒有任何紀錄</h4>
+        {% endif %}
         <ul class="list-group">
             {% for r in records %}
             <li class="list-group-item">
