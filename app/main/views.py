@@ -2,7 +2,7 @@
 Author: andy
 Date: 2023-06-06 01:48:42
 LastEditors: andy
-LastEditTime: 2023-06-06 10:43:26
+LastEditTime: 2023-06-08 04:58:08
 Description: app 主試圖
 '''
 
@@ -110,7 +110,6 @@ def edit_record(id):
         date_object = datetime.strptime(date, "%Y-%m-%d").date()
 
         type_obj = RecordType.query.get_or_404(type_id)
-        project_obj = Project.query.get_or_404(project_id)
 
         # 支出
         if int(select_in_out) == 0:
@@ -128,13 +127,17 @@ def edit_record(id):
 
         # 變更專案
         if int(project_id) != 0:
+            project_obj = Project.query.get_or_404(project_id)
+
             # 如果變更專案
             if record.project != project_obj:
                 old_project = record.project
 
                 # 處理餘額
                 project_obj.current_price += record.price
-                old_project.current_price -= record.price
+
+                if old_project:
+                    old_project.current_price -= record.price
 
                 # 處理關聯
                 project_obj.records.append(record)
@@ -146,8 +149,10 @@ def edit_record(id):
                 project_obj.current_price += int(price)
 
         else:
-            project_obj.current_price += record.price
-            project_obj.records.remove(record)
+            old_project = record.project
+            if old_project:
+                old_project.current_price -= record.price
+                old_project.records.remove(record)
 
         record.name = name
         record.price = price
@@ -167,6 +172,9 @@ def edit_record(id):
 
     if not is_in:
         pprice = -record.price
+
+    else:
+        pprice = record.price
 
     return render_template(
         "main/edit_record.html",
